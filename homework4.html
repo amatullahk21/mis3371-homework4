@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--
+    Program name: homework4.html
+    Author: Amatullah Kanchwala
+    Date created: 05/07/2026
+    Version: 4.0
+    Description: Patient registration form with JavaScript validation, Fetch API, iframe, cookies, local storage, and fixed content protection.
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizon Medical - Homework 4</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="homework4.js" defer></script>
+</head>
+
+<body>
+    <div id="header" class="sticky-header">
+        <img src="./logo.png?v=2" alt="Horizon Medical Logo" id="logo">
+        <h1>Horizon Medical</h1>
+        <p id="date"></p>
+
+        <div id="welcomeBox">
+            <p id="welcomeMessage">Welcome New User</p>
+            <label id="newUserLabel" style="display:none;">
+                <input type="checkbox" id="newUserCheck">
+                Not this user? Click here to start as a new user.
+            </label>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <h2>Patient Registration Form</h2>
+
+        <form id="form" action="thankyou.html" method="get">
+            <table>
+                <tr>
+                    <td><label for="fname">First Name:</label></td>
+                    <td>
+                        <input type="text" id="fname" name="fname"
+                        title="Enter 1 to 30 characters. Letters, apostrophes, and dashes only."
+                        pattern="[A-Za-z'-]{1,30}" required>
+                        <div class="error" id="fnameError"></div>
+                    </td>
+
+                    <td><label for="mi">Middle Initial:</label></td>
+                    <td>
+                        <input type="text" id="mi" name="mi"
+                        title="Optional. Enter one letter only."
+                        pattern="[A-Za-z]{1}" maxlength="1">
+                        <div class="error" id="miError"></div>
+                    </td>
+
+                    <td><label for="lname">Last Name:</label></td>
+                    <td>
+                        <input type="text" id="lname" name="lname"
+                        title="Enter 1 to 30 characters. Letters, apostrophes, and dashes only."
+                        pattern="[A-Za-z'-]{1,30}" required>
+                        <div class="error" id="lnameError"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="dob">Date of Birth:</label></td>
+                    <td>
+                        <input type="text" id="dob" name="dob"
+                        title="Enter date as MM/DD/YYYY. It cannot be in the future or more than 120 years ago."
+                        placeholder="MM/DD/YYYY" required>
+                        <div class="error" id="dobError"></div>
+                    </td>
+
+                    <td><label for="ssn">ID Number:</label></td>
+                    <td colspan="3">
+                        <input type="password" id="ssn" name="ssn"
+                        title="Enter a 9-digit ID number. It will be formatted as 123-45-6789."
+                        placeholder="123-45-6789" maxlength="11" required>
+                        <div class="error" id="ssnError"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="email">Email Address:</label></td>
+                    <td>
+                        <input type="email" id="email" name="email"
+                        title="Enter a valid email address in the format name@domain.com."
+                        placeholder="name@domain.com" required>
+                        <div class="error" id="emailError"></div>
+                    </td>
+
+                    <td><label for="phone">Phone Number:</label></td>
+                    <td colspan="3">
+                        <input type="text" id="phone" name="phone"
+                        title="Optional. Enter a phone number in the format 123-456-7890."
+                        placeholder="123-456-7890">
+                        <div class="error" id="phoneError"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="address1">Address Line 1:</label></td>
+                    <td colspan="5">
+                        <input type="text" id="address1" name="address1" class="long-input"
+                        title="Required. Enter 2 to 30 characters."
+                        pattern=".{2,30}" required>
+                        <div class="error" id="address1Error"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="address2">Address Line 2:</label></td>
+                    <td colspan="5">
+                        <input type="text" id="address2" name="address2" class="long-input"
+                        title="Optional. If entered, use 2 to 30 characters."
+                        pattern=".{2,30}">
+                        <div class="error" id="address2Error"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="city">City:</label></td>
+                    <td>
+                        <input type="text" id="city" name="city"
+                        title="Required. Enter 2 to 30 characters."
+                        pattern=".{2,30}" required>
+                        <div class="error" id="cityError"></div>
+                    </td>
+
+                    <td><label for="state">State:</label></td>
+                    <td>
+                        <select id="state" name="state" title="Please select a state." required>
+                            <option value="">Loading states...</option>
+                        </select>
+                        <div class="error" id="stateError"></div>
+                    </td>
+
+                    <td><label for="zip">Zip Code:</label></td>
+                    <td>
+                        <input type="text" id="zip" name="zip"
+                        title="Enter 5 digits only."
+                        placeholder="77002" maxlength="5" required>
+                        <div class="error" id="zipError"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="top-align">Medical History:</td>
+                    <td colspan="5" class="checkbox-group">
+                        <label><input type="checkbox" name="history" value="Chicken Pox"> Chicken Pox</label>
+                        <label><input type="checkbox" name="history" value="Measles"> Measles</label>
+                        <label><input type="checkbox" name="history" value="Covid-19"> Covid-19</label>
+                        <label><input type="checkbox" name="history" value="Small Pox"> Small Pox</label>
+                        <label><input type="checkbox" name="history" value="Tetanus"> Tetanus</label>
+                        <div class="error" id="historyError"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Gender:</td>
+                    <td colspan="5" class="radio-group">
+                        <label><input type="radio" name="gender" value="Male"> Male</label>
+                        <label><input type="radio" name="gender" value="Female"> Female</label>
+                        <label><input type="radio" name="gender" value="Other"> Other</label>
+                        <div class="error" id="genderError"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Vaccinated:</td>
+                    <td colspan="5" class="radio-group">
+                        <label><input type="radio" name="vaccinated" value="Yes"> Yes</label>
+                        <label><input type="radio" name="vaccinated" value="No"> No</label>
+                        <div class="error" id="vaccinatedError"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Insurance:</td>
+                    <td colspan="5" class="radio-group">
+                        <label><input type="radio" name="insurance" value="Yes"> Yes</label>
+                        <label><input type="radio" name="insurance" value="No"> No</label>
+                        <label><input type="radio" name="insurance" value="Unsure"> Unsure</label>
+                        <div class="error" id="insuranceError"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="salary">Desired Salary:</label></td>
+                    <td colspan="5">
+                        <input type="range" id="salary" name="salary" min="20000" max="200000" step="5000" value="50000">
+                        <span id="salaryValue">$50,000</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="symptoms">Current Symptoms:</label></td>
+                    <td colspan="5">
+                        <textarea id="symptoms" name="symptoms" rows="4" cols="50"
+                        title="Optional. Describe your symptoms. Do not use double quotes."
+                        placeholder="Describe your current symptoms here."></textarea>
+                        <div class="error" id="symptomsError"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="userid">Desired User ID:</label></td>
+                    <td>
+                        <input type="text" id="userid" name="userid"
+                        title="5 to 20 characters. Must begin with a letter. No spaces. Only letters, numbers, underscore, and dash are allowed."
+                        required>
+                        <div class="error" id="useridError"></div>
+                    </td>
+
+                    <td><label for="password">Password:</label></td>
+                    <td>
+                        <input type="password" id="password" name="password"
+                        title="At least 8 characters with at least 1 uppercase, 1 lowercase, and 1 number."
+                        required>
+                        <div class="error" id="passwordError"></div>
+                    </td>
+
+                    <td><label for="confirmPassword">Re-enter Password:</label></td>
+                    <td>
+                        <input type="password" id="confirmPassword" name="confirmPassword"
+                        title="Re-enter the same password." required>
+                        <div class="error" id="confirmPasswordError"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Remember Me:</td>
+                    <td colspan="5">
+                        <label>
+                            <input type="checkbox" id="rememberMe" checked>
+                            Remember my first name and non-secure form information for next time.
+                        </label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="6" class="button-row">
+                        <button type="button" onclick="reviewForm()">Review</button>
+                        <button type="button" id="validateBtn">Validate</button>
+                        <input type="reset" value="Clear" onclick="clearReview(); hideSubmitButton(); clearAllErrors(); clearStoredUser();">
+                        <input type="submit" id="submitBtn" value="Submit" style="display:none;">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <div id="iframe-section">
+        <h2>Health Information Resource</h2>
+        <p>This iframe is included for Homework 4 to demonstrate embedded content on the page.</p>
+        <iframe src="clinic-info.html" title="Horizon Medical Clinic Information"></iframe>
+    </div>
+
+    <div id="review-section">
+        <h2>Review Your Information</h2>
+        <div id="reviewOutput"></div>
+    </div>
+
+    <div id="footer" class="fixed-footer">
+        <div class="footer-left">
+            <p>Horizon Medical | PO Box 18881 | Sugar Land, TX 77496</p>
+        </div>
+
+        <div class="footer-center">
+            <button type="button">Contact Us</button>
+        </div>
+
+        <div class="footer-right">
+            <a href="https://www.facebook.com" target="_blank">Facebook</a>
+            <a href="https://www.twitter.com" target="_blank">Twitter</a>
+        </div>
+    </div>
+</body>
+</html>
